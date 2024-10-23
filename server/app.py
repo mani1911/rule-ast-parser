@@ -1,24 +1,31 @@
 from flask import Flask, render_template, request
 from pymongo import MongoClient
+from flask_cors import CORS, cross_origin
 import json
 from helpers.ast import parse, tokenize, evaluate, ASTNode, combine_rules
 
 app = Flask(__name__)
+CORS(app)
 client = MongoClient('localhost', 27017)
 
 db = client.flask_db
 
 @app.route('/')
+@cross_origin()
 def home():
     return render_template('index.html')
 
 @app.route('/create_rule', methods=['POST'])
+@cross_origin()
 def create_rule():
-    body = request.get_json()
-    return f'Welcome to the Flask app.'
+    rule = request.get_json().get('rule')
+    ast_root = parse(tokenize(rule))
+    
+    return {'ast_json' : json.dumps(ast_root.to_dict())}, 200
 
 
 @app.route('/evaluate_rule', methods = ['POST'])
+@cross_origin()
 def evaluate_rule():
     
     try:
@@ -34,6 +41,7 @@ def evaluate_rule():
         return f'Error evaluating the rule', 500
 
 @app.route('/combine_rules', methods = ['POST'])
+@cross_origin()
 def combine_ast_rules():
     try:
         body = request.json

@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+}
+
+.tree {
+  display: flex;
+  justify-content: center;
+}
+
+.node {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  margin: 20px;
+}
+
+.node-value {
+  background-color: #eee;
+  border: 2px solid #555;
+  border-radius: 8px;
+  padding: 10px;
+  display: inline-block;
+  min-width: 50px;
+  font-weight: bold;
+}
+
+.children {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.leaf {
+  background-color: #cce5ff;
+  border: 2px solid #004085;
+  border-radius: 5px;
+  padding: 5px;
+  display: inline-block;
+  min-width: 50px;
+}
+
+/* Connect lines between parent and child */
+.node::before, .node::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 20px;
+  border-top: 2px solid #555;
+}
+
+.node::before {
+  left: 50%;
+  border-right: 2px solid #555;
+}
+
+.node::after {
+  right: 50%;
+  border-left: 2px solid #555;
+}
+
+.node > .children > .node::before {
+  top: -20px;
+  border-top: none;
+  border-right: 2px solid #555;
+}
+
+.node > .children > .node::after {
+  top: -20px;
+  border-top: none;
+  border-left: 2px solid #555;
+}
+  

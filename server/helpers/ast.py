@@ -9,7 +9,8 @@ class ASTNode:
         
     def to_dict(self):
         if self.left is None and self.right is None:
-            return {'value': self.value}
+            print(self.value)
+            return {'value': self.value[0], 'left' : self.value[1], 'right' : self.value[2]}
         else:
             return {
                 'value': self.value,
@@ -87,11 +88,6 @@ def combine_rules(expr1, expr2, logical_op):
     combined_ast = ASTNode(logical_op, ast1, ast2)
     return combined_ast
 
-expression1 = "(age < 33 OR department = 'Sales')"
-expression2 = "(experience > 5 OR salary = 60)"
-
-tokens = tokenize(expression1)
-ast = parse(tokens)
 
 def evaluate_from_json(ast_json, data):
     if 'left' not in ast_json and 'right' not in ast_json:
@@ -118,7 +114,14 @@ def evaluate_from_json(ast_json, data):
         return left_value or right_value
 
 
-print(json.dumps(ast.to_dict()))
+expression1 = "(age < 33 OR department = 'Sales')"
+expression2 = "(experience > 5 OR salary = 60)"
+
+tokens = tokenize(expression1)
+ast = parse(tokens)
+
+
+print(ast.to_dict())
 
 # data = {
 #     'age': 32,
