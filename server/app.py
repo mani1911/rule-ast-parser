@@ -10,11 +10,6 @@ client = MongoClient('localhost', 27017)
 
 db = client.flask_db
 
-@app.route('/')
-@cross_origin()
-def home():
-    return render_template('index.html')
-
 @app.route('/create_rule', methods=['POST'])
 @cross_origin()
 def create_rule():
@@ -31,7 +26,10 @@ def evaluate_rule():
     try:
         body = request.json
         rule = body.get('rule')
+        print(body.get('data'))
         json_data = json.loads(body.get('data'))
+        
+        print(rule, json_data)
         
         ast_node = parse(tokenize(rule))
         eval_answer = evaluate(ast_node, json_data)
@@ -49,9 +47,7 @@ def combine_ast_rules():
         print(rule1, rule2, op)
         
         combined_ast = combine_rules(rule1, rule2, op)
-        print(combined_ast)
-        
-        return f'rules successfully combined', 200
+        return {'ast_json' : json.dumps(combined_ast.to_dict())}, 200
 
     except Exception as e:
         print(e)

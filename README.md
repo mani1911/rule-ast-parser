@@ -12,16 +12,20 @@ Parse and evaluate logical rules by converting to AST and other convinient forma
    ```python3 server/app.y```
    The server starts listening at port 5000
 
+
+### Snapshot of the simple application 
+![alt text](assets/image.png)
+
 ### Sample Rule Format
 ```((age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing')) AND (salary > 50000 OR experience > 5)```
 
-### Smaple Data format for the above Rule
+### Sample Data format for the above Rule
 ```
-data = {
-    'age': 32,
-    'department': 'Sales',
-    'salary': 60000,
-    'experience': 3
+{
+    "age": 32,
+    "department": "Sales",
+    "salary": 60000,
+    "experience": 3
 }
 ```
 
